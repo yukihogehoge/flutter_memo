@@ -1,4 +1,4 @@
-# コード説明_1
+# Chapter2-3
 ## リスト2_2〜2_4
 ```dart
 class Widget2_2 extends StatelessWidget {
