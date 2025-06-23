@@ -503,3 +503,83 @@ onChanged: changeField; // フィールドが変更、編集されると関数�
 ```dart
 onChanged: changeField(); // 関数がその場で実行されて、返り値（void）がonChangedに渡される（これはNG）
 ```
+
+```dart
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Generated App',
+      theme: ThemeData(
+        useMaterial3: false,
+        primarySwatch: Colors.teal,
+        primaryColor: const Color(0xFF009688),
+        canvasColor: const Color(0xFFfafafa),
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomeScreen4_8(),
+        '/second': (context) => NextScreen4_8('Second'),
+        '/third': (context) => NextScreen4_8('Third'),
+      },
+    );
+  }
+}
+
+class HomeScreen4_8 extends StatelessWidget {
+  const HomeScreen4_8({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Home')),
+      body: Center(
+        child: const Text('Home Screen', style: TextStyle(fontSize: 32.0)),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 1,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(label: 'Home', icon: const Icon(Icons.home)),
+          BottomNavigationBarItem(
+            label: 'Next',
+            icon: const Icon(Icons.navigate_next),
+          ),
+        ],
+        onTap: (int value) {
+          if (value == 1) {
+            Navigator.pushNamed(context, '/second');
+          }
+        },
+      ),
+    );
+  }
+}
+
+class NextScreen4_8 extends StatelessWidget {
+  final String _value;
+  NextScreen4_8(this._value);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Next")),
+      body: Center(
+        child: Text('$_value Screen', style: const TextStyle(fontSize: 32.0)),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            label: 'prev',
+            icon: const Icon(Icons.navigate_before),
+          ),
+          BottomNavigationBarItem(label: '?', icon: const Icon(Icons.android)),
+        ],
+        onTap: (int value) {
+          if (value == 0) Navigator.pop(context);
+          if (value == 1) Navigator.pushNamed(context, '/third');
+        },
+      ),
+    );
+  }
+}
