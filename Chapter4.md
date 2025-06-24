@@ -537,6 +537,7 @@ class HomeScreen4_8 extends StatelessWidget {
         child: const Text('Home Screen', style: TextStyle(fontSize: 32.0)),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        // Nextアイテムが初期選択されている状態にする
         currentIndex: 1,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(label: 'Home', icon: const Icon(Icons.home)),
@@ -546,7 +547,9 @@ class HomeScreen4_8 extends StatelessWidget {
           ),
         ],
         onTap: (int value) {
+          // 引数にタップしたアイテムのインデックス番号が渡される
           if (value == 1) {
+            // context => 出発点（現住所）・画面遷移機能'/second' => 目的地（遷移先）
             Navigator.pushNamed(context, '/second');
           }
         },
@@ -557,6 +560,8 @@ class HomeScreen4_8 extends StatelessWidget {
 
 class NextScreen4_8 extends StatelessWidget {
   final String _value;
+  // routesで指定した名前付きのウィジェットが入るので_valueにはそのウィジェット引数が入る
+  // 先頭の_（アンダースコア）は、この変数がこのクラスの内部だけで使われるプライベートな変数であることを示す慣習
   NextScreen4_8(this._value);
 
   @override
@@ -576,7 +581,9 @@ class NextScreen4_8 extends StatelessWidget {
           BottomNavigationBarItem(label: '?', icon: const Icon(Icons.android)),
         ],
         onTap: (int value) {
+          // インデックス番号0のアイテムを選択した時の処理（前の画面に戻る）
           if (value == 0) Navigator.pop(context);
+          // インデックス番号1のアイテムを選択した時の処理（/thirdという名前が付いたウィジェットへ遷移する）
           if (value == 1) Navigator.pushNamed(context, '/third');
         },
       ),
