@@ -504,6 +504,7 @@ onChanged: changeField; // フィールドが変更、編集されると関数�
 onChanged: changeField(); // 関数がその場で実行されて、返り値（void）がonChangedに渡される（これはNG）
 ```
 
+## リスト4_8
 ```dart
 class MyApp extends StatelessWidget {
   @override
@@ -590,3 +591,183 @@ class NextScreen4_8 extends StatelessWidget {
     );
   }
 }
+```
+## リスト4_9
+```dart
+class Widget4_9 extends StatefulWidget {
+  Widget4_9({Key? key}) : super(key: key);
+
+  @override
+  _Widget4_9State createState() => _Widget4_9State();
+}
+
+// 一つのアニメーションコントローラーに対してTickerクラスを提供するという機能を追加する
+class _Widget4_9State extends State<Widget4_9>
+    with SingleTickerProviderStateMixin {
+  // タブのノブ部分をTabクラスのインスタンスのリストで定義する
+  static const List<Tab> tabs = <Tab>[
+    Tab(text: 'One'),
+    Tab(text: 'Two'),
+    Tab(text: 'Three'),
+  ];
+
+  // タブ操作の制御を担当するTabControllerクラス型の変数の宣言（※lateにより初期化は後で行う）
+  late TabController _tabController;
+
+  @override
+  // ※初期化
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: tabs.length);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('My App'),
+        bottom: TabBar(controller: _tabController, tabs: tabs),
+      ),
+
+      body: TabBarView(
+        // tabsリストを元に、ウィジェットのリストを生成する
+        controller: _tabController,
+        // .map() => リストの各要素を1つずつ取り出して、指定された処理を行うメソッド
+        // tabsリストからTabオブジェクトが1つずつtabという変数に渡される
+        // return createTab(tab);の部分で、渡されたtabを引数にしてcreateTabという別の関数を呼び出している
+        children: tabs.map((Tab tab) {
+          return createTab(tab);
+          // IterableをList に変換
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget createTab(Tab tab) {
+    return Center(
+      child: Text(
+        'This is "${tab.text}" Tab.',
+        style: const TextStyle(fontSize: 32.0, color: Colors.blue),
+      ),
+    );
+  }
+}
+```
+## リスト4_11
+```dart
+class Widget4_11 extends StatefulWidget {
+  Widget4_11({Key? key}) : super(key: key);
+
+  @override
+  _Widget4_11State createState() => _Widget4_11State();
+}
+
+// 一つのアニメーションコントローラーに対してTickerクラスを提供するという機能を追加する
+class _Widget4_11State extends State<Widget4_11>
+    with SingleTickerProviderStateMixin {
+  // タブのノブ部分にアイコンを追加
+  static const List<Tab> tabs = <Tab>[
+    Tab(text: 'One', icon: Icon(Icons.star)),
+    Tab(text: 'Two', icon: Icon(Icons.info)),
+    Tab(text: 'Three', icon: Icon(Icons.home)),
+  ];
+
+  // タブ操作の制御を担当するTabControllerクラス型の変数の宣言（※lateにより初期化は後で行う）
+  late TabController _tabController;
+
+  @override
+  // ※初期化
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: tabs.length);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('My App')),
+      // タブバーを画面下部に表示
+      bottomNavigationBar: Container(
+        color: Colors.blue,
+        child: TabBar(controller: _tabController, tabs: tabs),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: tabs.map((Tab tab) {
+          return createTab(tab);
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget createTab(Tab tab) {
+    return Center(
+      child: Text(
+        'This is "${tab.text}" Tab.',
+        style: const TextStyle(fontSize: 32.0, color: Colors.blue),
+      ),
+    );
+  }
+}
+```
+## リスト4_12
+```dart
+class Widget4_12 extends StatefulWidget {
+  // nullも許容する
+  Widget4_12({Key? key}) : super(key: key);
+  @override
+  _Widget4_12State createState() => _Widget4_12State();
+}
+
+class _Widget4_12State extends State<Widget4_12> {
+  // ウィジェット型のリストを用意
+  static var _items = <Widget>[];
+  static var _message = 'ok.';
+  static var _tapped = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    for (var i = 0; i < 5; i++) {
+      var item = ListTile(
+        leading: const Icon(Icons.android),
+        title: Text('No, $i'),
+        onTap: () {
+          _tapped = i;
+          tapItem();
+        },
+      );
+      // 作成済みのウィジェット型のリストに追加
+      _items.add(item);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Flutter App')),
+      body: Center(
+        child: Text(_message, style: const TextStyle(fontSize: 32.0)),
+      ),
+      drawer: Drawer(
+        // ListViewインスタンスを設定
+        child: ListView(
+          // shrinkWrap: true => 自身の子要素（コンテンツ）をちょうど囲むのに必要な最小限のサイズまで縮小（シュリンク）させる
+          // コンテンツが短ければウィジェットのサイズも短くなり、コンテンツが長ければスクロール可能になる
+          shrinkWrap: true,
+          // 上下左右の4辺すべてに、均等に 20.0 論理ピクセルの余白を設定する
+          padding: const EdgeInsets.all(20.0),
+          children: _items,
+        ),
+      ),
+    );
+  }
+
+  void tapItem() {
+    Navigator.pop(context);
+    setState(() {
+      _message = 'tapped:[$_tapped]';
+    });
+  }
+}
+```
