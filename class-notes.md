@@ -116,3 +116,9 @@ void main() {
 
 ### null許容
 
+## chapter4
+### 情報の表示
+- TabBar: タブの一覧を表示するウィジェット
+- Tab: 一つ一つのタブのウィジェット
+- TabBarView: タブごとの表示内容のウィジェット
+- TabController: TabBarとTabBarViewを連携させるための仕組み
