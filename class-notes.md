@@ -92,7 +92,16 @@ Container(
 ### Column
 複数のウィジェットを縦に並べて表示する
 - `mainAxisAlignment: MainAxisAlignment.start`: 上下の位置（画面の一番上）
+- `mainAxisAlignment: MainAxisAlignment.center`: 上下の位置（画面の中央）
+- `mainAxisAlignment: MainAxisAlignment.end`: 上下の位置（画面の一番下）
+- `crossAxisAlignment: CrossAxisAlignment.start`: 文字の揃え位置（左寄せ）
 - `crossAxisAlignment: CrossAxisAlignment.center`: 文字の揃え位置（中央揃え）
+- `crossAxisAlignment: CrossAxisAlignment.end`: 文字の揃え位置（右寄せ）
+子ウィジェットの「すき間」の空け方を決める設定
+- `mainAxisAlignment: MainAxisAlignment.spaceBetween`: 両端にスペースを設けず、アイテム間にのみ均等にスペースを配置
+- `mainAxisAlignment: MainAxisAlignment.spaceAround`: 各アイテムの周り(Around)に均等なスペースを設ける。結果的に両端のスペースは、アイテム間のスペースの半分になる
+- `mainAxisAlignment: MainAxisAlignment.spaceEvenly`: 全てのすき間が均等(Evenly)になる。両端とアイテム間のスペースがすべて同じ幅になる
+
 
 ## chapter3
 ### カスケード記法
